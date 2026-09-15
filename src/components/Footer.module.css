@@ -1,0 +1,33 @@
+.footer {
+  background: var(--color-bg-secondary);
+  border-top: 1px solid #ddd;
+  padding: 2.5rem 0;
+  margin-top: 3rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.title {
+  font-family: 'AmericanTypewriter', serif;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.footer p {
+  color: var(--color-text-muted);
+  margin: 0.25rem 0;
+}
+
+.social {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .columns { grid-template-columns: 1fr; }
+}

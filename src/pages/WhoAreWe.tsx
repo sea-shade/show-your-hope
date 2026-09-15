@@ -69,7 +69,7 @@ export default function WhoAreWe() {
         <section className={styles.section} id="wherehavewebeen">
           <h2>Where have we been?</h2>
           <p>
-            Since 2003, we have been in 45 countries, showing paintings from 135 nationalities —
+            Since 2003, we have been in 45 countries, showing paintings from 135 nationalities -
             all with a universal expression about <span className={styles.hope}>Hope</span>. We
             presented in Romania for schoolkids and in Iran&apos;s national House of the Artists. We
             presented at many large music events in Europe, in alternative art houses in Berlin and
@@ -82,7 +82,7 @@ export default function WhoAreWe() {
           <h2>Where are we?</h2>
           <p>
             The project is coordinated from the historical &ldquo;Spoelhuis&rdquo; (washhouse) in our
-            hometown Eindhoven, Netherlands — known as the Inkijkmuseum. This is where the project
+            hometown Eindhoven, Netherlands - known as the Inkijkmuseum. This is where the project
             maintains a public storage for hundreds of paintings. It also functions as gallery, mini
             hostel, classroom and micro cinema.
           </p>

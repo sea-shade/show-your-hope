@@ -32,6 +32,31 @@
   font-family: 'AmericanTypewriter', serif;
 }
 
+.statement {
+  background: var(--color-bg-tertiary);
+  text-align: center;
+}
+
+.statementText {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'AmericanTypewriter', serif;
+}
+
+.tunisiaTeaser {
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.languageList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
 .intro {
   font-size: 1.15rem;
   line-height: 1.8;

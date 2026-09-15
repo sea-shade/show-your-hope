@@ -22,6 +22,16 @@ export default function Welcome() {
       </div>
 
       <div className="container">
+        <section className={`${styles.section} ${styles.statement}`}>
+          <p className={styles.statementText}>
+            Between <span className={styles.show}>2003</span> and{' '}
+            <span className={styles.show}>2020</span> we have collected almost{' '}
+            <span className={styles.show}>1000</span> paintings from artists all over the world.
+            They all made a painting about <span className={styles.hope}>Hope</span>, the universal
+            and positive emotion.
+          </p>
+        </section>
+
         <section className={styles.section}>
           <p className={styles.intro}>
             <span className={`syh-logo ${styles.show}`}>Show </span>
@@ -59,22 +69,11 @@ export default function Welcome() {
         </section>
 
         <section className={`${styles.section} ${styles.sectionAlt}`}>
-          <div className={styles.splitRow}>
-            <div className={styles.splitText}>
-              <h2>
-                In <span className={styles.show}>September 2018</span> a tour started to{' '}
-                <span className={styles.hope}>Tunisia</span>
-              </h2>
-              <p>
-                Martin drove to Genoa and shipped to Tunis where the national tour started visiting
-                all 21 gouvernerates of Tunisia — a 5000 km journey in the yellow{' '}
-                <span className={styles.show}>DAF</span> truck built in Eindhoven in 1986.
-              </p>
-            </div>
-            <div>
-              <img src="/tunisia.jpg" alt="Tunisia tour" className={styles.splitImg} />
-            </div>
-          </div>
+          <p className={styles.tunisiaTeaser}>
+            In September 2018 a tour started to Tunisia, a 5000 km journey visiting all 21
+            gouvernerates of the country.{' '}
+            <Link to="/tunisia">Read about the tour →</Link>
+          </p>
         </section>
 
         <section className={styles.section}>
@@ -114,6 +113,63 @@ export default function Welcome() {
             <div>
               <img src="/syh_map_overview.png" alt="World map overview" className={styles.splitImg} />
             </div>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Final exhibition and catalog</h2>
+          <p>
+            In October 2022 we organized the last exhibition with all the paintings at VDLART
+            Gallery in Eindhoven City during the Dutch Design Week.
+          </p>
+          <p>
+            We shall also publish a new catalog with all unpublished paintings and stories made by
+            international artists, as they were told on stage during our theatre performances. The
+            following translations can be downloaded:
+          </p>
+          <ul className={styles.languageList}>
+            <li><a href="https://showyourhope.net/translations/final_serbian.pdf" target="_blank" rel="noreferrer">Serbian</a></li>
+            <li><a href="https://showyourhope.net/translations/final_croatian.pdf" target="_blank" rel="noreferrer">Croatian</a></li>
+            <li><a href="https://showyourhope.net/translations/final_arab.pdf" target="_blank" rel="noreferrer">Arab</a></li>
+            <li><a href="https://showyourhope.net/translations/final_hindi.pdf" target="_blank" rel="noreferrer">Hindi</a></li>
+            <li>Dutch (not yet available)</li>
+            <li>German (not yet available)</li>
+            <li>French (not yet available)</li>
+          </ul>
+        </section>
+
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
+          <h2 className={styles.sectionTitle}>Thank you</h2>
+          <p>
+            Thank you all for these wonderful years. Thank you artists, thank you audience, thank
+            you organizers, and thank you all who have helped!
+          </p>
+          <p>
+            The world is still full of hope but Mr. Martin is going to focus on reality now.
+          </p>
+          <p>
+            Watch the Show Your Hope Final Grand Presentation below, or visit our{' '}
+            <a href="https://www.youtube.com/user/ShowYourHope" target="_blank" rel="noreferrer">
+              YouTube channel
+            </a>{' '}
+            for more.
+          </p>
+          <div className={styles.videoGrid}>
+            {[
+              { id: 'BChnGrzIlPs', title: 'Show Your Hope Final Grand Presentation Part 1' },
+              { id: 'WuJTDIcvk_A', title: 'Grand Final presentation preparations part 2' },
+            ].map(v => (
+              <div key={v.id}>
+                <div className={styles.videoWrapper}>
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${v.id}?showinfo=0`}
+                    allowFullScreen
+                    title={v.title}
+                  />
+                </div>
+                <div className={styles.videoTitle}>{v.title}</div>
+              </div>
+            ))}
           </div>
         </section>
       </div>

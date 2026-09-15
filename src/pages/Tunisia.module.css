@@ -1,0 +1,41 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intro {
+  padding: 2rem 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 800px;
+}
+
+.show { color: var(--color-show); }
+.your { color: var(--color-your); }
+.hope { color: var(--color-hope); }
+
+.stop {
+  padding: 2rem 0;
+  border-top: 1px solid #ddd;
+}
+
+.stopTitle {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-family: 'AmericanTypewriter', serif;
+}
+
+.stop p {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 800px;
+  margin-bottom: 1rem;
+}
