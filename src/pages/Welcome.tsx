@@ -128,10 +128,10 @@ export default function Welcome() {
             following translations can be downloaded:
           </p>
           <ul className={styles.languageList}>
-            <li><a href="https://showyourhope.net/translations/final_serbian.pdf" target="_blank" rel="noreferrer">Serbian</a></li>
-            <li><a href="https://showyourhope.net/translations/final_croatian.pdf" target="_blank" rel="noreferrer">Croatian</a></li>
-            <li><a href="https://showyourhope.net/translations/final_arab.pdf" target="_blank" rel="noreferrer">Arab</a></li>
-            <li><a href="https://showyourhope.net/translations/final_hindi.pdf" target="_blank" rel="noreferrer">Hindi</a></li>
+            <li><a href="/translations/final_serbian.pdf" target="_blank" rel="noreferrer">Serbian</a></li>
+            <li><a href="/translations/final_croatian.pdf" target="_blank" rel="noreferrer">Croatian</a></li>
+            <li><a href="/translations/final_arab.pdf" target="_blank" rel="noreferrer">Arab</a></li>
+            <li><a href="/translations/final_hindi.pdf" target="_blank" rel="noreferrer">Hindi</a></li>
             <li>Dutch (not yet available)</li>
             <li>German (not yet available)</li>
             <li>French (not yet available)</li>

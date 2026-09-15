@@ -12,8 +12,9 @@ dist
 dist-ssr
 *.local
 
-# Local symlink to painting images (fetched from syh-pages in CI)
+# Assets fetched from the syh-pages repository during the Pages build
 /public/painting_images
+/public/translations
 
 # Editor directories and files
 .vscode/*

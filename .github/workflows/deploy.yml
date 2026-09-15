@@ -10,17 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Checkout painting images
+      - name: Checkout site assets
         uses: actions/checkout@v4
         with:
           repository: thelamb/syh-pages
           sparse-checkout: |
             painting_images
+            translations
           sparse-checkout-cone-mode: false
           path: syh-pages
 
-      - name: Copy painting images into public
-        run: cp -r syh-pages/painting_images public/painting_images
+      - name: Copy site assets into public
+        run: |
+          cp -r syh-pages/painting_images public/painting_images
+          cp -r syh-pages/translations public/translations
 
       - uses: actions/setup-node@v4
         with:
