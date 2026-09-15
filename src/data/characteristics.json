@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "landscape"
+  },
+  {
+    "id": 2,
+    "name": "portrait"
+  },
+  {
+    "id": 3,
+    "name": "abstract"
+  },
+  {
+    "id": 4,
+    "name": "figurative"
+  },
+  {
+    "id": 6,
+    "name": "with-text"
+  },
+  {
+    "id": 7,
+    "name": "sculpture"
+  },
+  {
+    "id": 13,
+    "name": "traditional"
+  }
+]

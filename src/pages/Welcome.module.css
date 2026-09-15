@@ -1,0 +1,154 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.show { color: var(--color-show); }
+.your { color: var(--color-your); }
+.hope { color: var(--color-hope); }
+
+.section {
+  padding: 3rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.sectionAlt {
+  background: var(--color-bg-secondary);
+  margin: 0 -1.5rem;
+  padding: 3rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-family: 'AmericanTypewriter', serif;
+}
+
+.intro {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'AmericanTypewriter', serif;
+}
+
+.featuredGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.featuredItem {
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.featuredItem:hover {
+  text-decoration: none;
+}
+
+.featuredImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-hope);
+  transition: transform 0.2s;
+}
+
+.featuredItem:hover .featuredImg {
+  transform: scale(1.04);
+}
+
+.featuredTitle {
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.featuredArtist {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.featuredHint {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.splitRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.splitText h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-family: 'AmericanTypewriter', serif;
+}
+
+.splitText p {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.splitImg {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.mapLink {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.videoTitle {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .featuredGrid { grid-template-columns: 1fr; }
+  .videoGrid { grid-template-columns: 1fr; }
+  .splitRow { grid-template-columns: 1fr; }
+}

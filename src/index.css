@@ -1,0 +1,74 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-show: lightgreen;
+  --color-your: green;
+  --color-hope: orange;
+  --color-bg-primary: #FFFCE6;
+  --color-bg-secondary: #F4FFD9;
+  --color-bg-tertiary: #F3EFD9;
+  --color-selected: #A2DFE8;
+  --color-selected-secondary: #AAF185;
+  --color-nav-text: rgba(0, 0, 0, 0.85);
+  --color-text: #333;
+  --color-text-muted: #666;
+  --nav-height: 60px;
+}
+
+@font-face {
+  font-family: 'AmericanTypewriter';
+  src: url('/fonts/AmericanTypewriter.woff') format('woff');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'AmericanTypewriter';
+  src: url('/fonts/AmericanTypewriterMediumBold.woff') format('woff');
+  font-weight: bold;
+}
+
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg-primary);
+  line-height: 1.6;
+}
+
+a {
+  color: green;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.page {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+.syh-logo {
+  font-family: 'AmericanTypewriter', serif;
+  font-weight: bold;
+}
+
+.syh-show { color: var(--color-show); }
+.syh-your { color: var(--color-your); }
+.syh-hope { color: var(--color-hope); }

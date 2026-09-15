@@ -1,0 +1,32 @@
+.map {
+  height: calc(100vh - var(--nav-height) - 48px);
+  width: 100%;
+}
+
+.legendBar {
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
