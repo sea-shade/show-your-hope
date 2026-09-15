@@ -4,6 +4,7 @@
 import re
 import json
 import sys
+import html
 
 SQL_FILE = "../syh-ruby/db/backup/syh_development_02-05-2018.sql"
 OUT_DIR = "src/data"
@@ -265,11 +266,11 @@ def main():
         paintings.append({
             "id": pid,
             "tag": tag,
-            "title": r.get("title") or "",
+            "title": html.unescape(r.get("title") or ""),
             "date": r.get("date") or "",
             "is_vertical": to_bool(r.get("is_vertical")),
             "sell_status": sell_status,
-            "story": (r.get("story") or "").strip(),
+            "story": html.unescape((r.get("story") or "").strip()),
             "is_private": is_private,
             "artist": artist,
             "characteristics": [char_id_to_name[c] for c in painting_chars.get(pid, []) if c in char_id_to_name],
