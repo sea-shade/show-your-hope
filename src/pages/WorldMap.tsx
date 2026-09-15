@@ -111,7 +111,7 @@ export default function WorldMap() {
   }
 
   return (
-    <div className="page">
+    <div className={`page ${styles.mapPage}`}>
       <div className={styles.legendBar}>
         <div className={styles.container}>
           {LAYERS.map(l => (

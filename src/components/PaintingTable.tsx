@@ -17,6 +17,15 @@ const Row = memo(function Row({ painting, index, selected, onSelect }: RowProps)
       data-index={index}
       className={selected ? styles.selected : undefined}
       onClick={() => onSelect(index)}
+      /* Only the selected row is in the tab order, so the table is one stop
+         rather than nine hundred; the arrow keys move from there, as they do
+         for the carousel this table is paired with. */
+      tabIndex={selected ? 0 : -1}
+      onKeyDown={e => {
+        if (e.key !== 'Enter' && e.key !== ' ') return
+        e.preventDefault()
+        onSelect(index)
+      }}
     >
       <td>{painting.tag}</td>
       <td>{painting.artist.fullname}</td>

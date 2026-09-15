@@ -70,83 +70,94 @@ interface ModalProps {
 }
 
 function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
+  const dialog = useRef<HTMLDialogElement>(null)
+
+  /* A dialog rather than a div, as the cookie dialog is, so that the backdrop,
+     Escape and the focus trap are the browser's job rather than ours. The
+     background still needs pinning: a modal dialog makes the page inert but
+     does not stop it scrolling. */
   useEffect(() => {
+    dialog.current?.showModal()
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = ''
     }
   }, [])
 
-  useEffect(() => {
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [onClose])
-
   return (
-    <div className={styles.modalBackdrop} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={painting.title}>
-        <button className={styles.modalClose} onClick={onClose} aria-label="Close">×</button>
-        <div className={styles.modalBody}>
-          <div className={styles.modalImages}>
-            <PaintingImage
-              tag={painting.tag}
-              alt={painting.title}
-              className={styles.modalImg}
-            />
-            <SidekickImage
-              tag={painting.tag}
-              alt={painting.artist.fullname}
-              className={styles.modalSidekick}
-            />
+    <dialog
+      ref={dialog}
+      className={styles.modal}
+      aria-label={painting.title}
+      /* Whether the modal is open is React's state, so Escape and a click on
+         the backdrop are turned into the one close everything else goes
+         through rather than closing the element behind React's back. */
+      onCancel={e => {
+        e.preventDefault()
+        onClose()
+      }}
+      onClick={e => {
+        if (e.target === dialog.current) onClose()
+      }}
+    >
+      <button className={styles.modalClose} onClick={onClose} aria-label="Close">×</button>
+      <div className={styles.modalBody}>
+        <div className={styles.modalImages}>
+          <PaintingImage
+            tag={painting.tag}
+            alt={painting.title}
+            className={styles.modalImg}
+          />
+          <SidekickImage
+            tag={painting.tag}
+            alt={painting.artist.fullname}
+            className={styles.modalSidekick}
+          />
+        </div>
+        <div className={styles.modalInfo}>
+          <div className={styles.modalNav}>
+            <button className={styles.modalNavBtn} onClick={onPrev}>&lt; Previous</button>
+            <button className={styles.modalNavBtn} onClick={onNext}>Next &gt;</button>
           </div>
-          <div className={styles.modalInfo}>
-            <div className={styles.modalNav}>
-              <button className={styles.modalNavBtn} onClick={onPrev}>&lt; Previous</button>
-              <button className={styles.modalNavBtn} onClick={onNext}>Next &gt;</button>
+          <h2 className={styles.modalTitle}>{painting.title}</h2>
+          <p className={styles.modalArtist}>{painting.artist.fullname}</p>
+          <p className={styles.modalMeta}>
+            {painting.artist.country.name} · {painting.date} · #{painting.tag}
+          </p>
+          <p className={styles.modalMeta}>
+            {SELL_STATUS_LABELS[painting.sell_status] ?? 'Not for sale'}
+          </p>
+          {painting.characteristics.length > 0 && (
+            <div className={styles.modalTags}>
+              {painting.characteristics.map(c => (
+                <span key={c} className={styles.tag}>{c}</span>
+              ))}
             </div>
-            <h2 className={styles.modalTitle}>{painting.title}</h2>
-            <p className={styles.modalArtist}>{painting.artist.fullname}</p>
-            <p className={styles.modalMeta}>
-              {painting.artist.country.name} · {painting.date} · #{painting.tag}
-            </p>
-            <p className={styles.modalMeta}>
-              {SELL_STATUS_LABELS[painting.sell_status] ?? 'Not for sale'}
-            </p>
-            {painting.characteristics.length > 0 && (
-              <div className={styles.modalTags}>
-                {painting.characteristics.map(c => (
-                  <span key={c} className={styles.tag}>{c}</span>
-                ))}
+          )}
+          {painting.selections.length > 0 && (
+            <div className={styles.modalTags}>
+              {painting.selections.map(s => (
+                <span key={s} className={styles.selectionTag}>{s}</span>
+              ))}
+            </div>
+          )}
+          <p className={styles.modalStory}>{painting.story}</p>
+          {painting.videos.map((v, i) => {
+            const videoId = getYouTubeId(v.link)
+            if (!videoId) return null
+            return (
+              <div key={i} className={styles.modalVideo}>
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                  allowFullScreen
+                  title={`${painting.title} video ${i + 1}`}
+                />
               </div>
-            )}
-            {painting.selections.length > 0 && (
-              <div className={styles.modalTags}>
-                {painting.selections.map(s => (
-                  <span key={s} className={styles.selectionTag}>{s}</span>
-                ))}
-              </div>
-            )}
-            <p className={styles.modalStory}>{painting.story}</p>
-            {painting.videos.map((v, i) => {
-              const videoId = getYouTubeId(v.link)
-              if (!videoId) return null
-              return (
-                <div key={i} className={styles.modalVideo}>
-                  <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-                    allowFullScreen
-                    title={`${painting.title} video ${i + 1}`}
-                  />
-                </div>
-              )
-            })}
-          </div>
+            )
+          })}
         </div>
       </div>
-    </div>
+    </dialog>
   )
 }
 

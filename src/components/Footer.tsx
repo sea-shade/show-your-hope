@@ -22,6 +22,7 @@ export default function Footer() {
           </div>
           <div>
             <div className={styles.title}>Bits &amp; pieces</div>
+            <p><Link to="/tunisia">The Tunisia tour</Link></p>
             <button className={styles.cookiesLink} onClick={() => cookies.current?.showModal()}>
               <img src="/icons/cookies.png" alt="" className={styles.cookiesIcon} />
               Cookies

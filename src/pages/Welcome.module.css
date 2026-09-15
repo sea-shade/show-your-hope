@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: clamp(220px, 34vw, 400px);
   overflow: hidden;
 }
 
@@ -17,7 +17,7 @@
 
 .section {
   padding: 3rem 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .sectionAlt {
@@ -27,9 +27,8 @@
 }
 
 .sectionTitle {
-  font-size: 1.5rem;
+  font-size: var(--text-xl);
   margin-bottom: 1.5rem;
-  font-family: 'AmericanTypewriter', serif;
 }
 
 .statement {
@@ -38,16 +37,16 @@
 }
 
 .statementText {
-  font-size: 1.4rem;
+  font-size: var(--text-lg);
   line-height: 1.6;
   max-width: 800px;
   margin: 0 auto;
-  font-family: 'AmericanTypewriter', serif;
+  font-family: var(--font-display);
 }
 
 .tunisiaTeaser {
   text-align: center;
-  font-size: 1.05rem;
+  font-size: var(--text-md);
 }
 
 .languageList {
@@ -58,12 +57,12 @@
 }
 
 .intro {
-  font-size: 1.15rem;
+  font-size: var(--text-md);
   line-height: 1.8;
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
-  font-family: 'AmericanTypewriter', serif;
+  font-family: var(--font-display);
 }
 
 .featuredGrid {
@@ -103,13 +102,13 @@
 
 .featuredArtist {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .featuredHint {
   text-align: center;
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   margin-top: 0.5rem;
 }
 
@@ -121,9 +120,8 @@
 }
 
 .splitText h2 {
-  font-size: 1.3rem;
+  font-size: var(--text-lg);
   margin-bottom: 1rem;
-  font-family: 'AmericanTypewriter', serif;
 }
 
 .splitText p {
@@ -133,7 +131,7 @@
 
 .splitImg {
   width: 100%;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
 }
 
 .mapLink {
@@ -153,7 +151,7 @@
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .videoWrapper iframe {
@@ -167,7 +165,7 @@
 
 .videoTitle {
   margin-top: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--color-text-muted);
   text-align: center;
 }
