@@ -2,15 +2,12 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { divIcon } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import paintingsData from '../data/paintings.json'
-import exhibitionsData from '../data/exhibitions.json'
-import type { Painting, Exhibition } from '../types'
+import 'leaflet/dist/leaflet.css'
 import PaintingImage from '../components/PaintingImage'
 import SidekickImage from '../components/SidekickImage'
+import DataStatus from '../components/DataStatus'
+import { loadPaintings, loadExhibitions, useData } from '../lib/paintingData'
 import styles from './WorldMap.module.css'
-
-const paintings = (paintingsData as Painting[]).filter(p => !p.is_private)
-const exhibitions = exhibitionsData as Exhibition[]
 
 type MarkerType = 'artist' | 'painting' | 'exhibition'
 
@@ -59,9 +56,12 @@ interface MarkerData {
 }
 
 export default function WorldMap() {
+  const { data: paintings, failed: paintingsFailed } = useData(loadPaintings)
+  const { data: exhibitions, failed: exhibitionsFailed } = useData(loadExhibitions)
   const [hidden, setHidden] = useState<MarkerType[]>(['artist'])
 
   const markers = useMemo<MarkerData[]>(() => {
+    if (!paintings || !exhibitions) return []
     const result: MarkerData[] = []
     const seenArtists = new Set<number>()
 
@@ -104,10 +104,18 @@ export default function WorldMap() {
     }
 
     return result
-  }, [])
+  }, [paintings, exhibitions])
 
   function toggleLayer(type: MarkerType) {
     setHidden(prev => (prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]))
+  }
+
+  if (!paintings || !exhibitions) {
+    return (
+      <div className="page">
+        <DataStatus failed={paintingsFailed || exhibitionsFailed} />
+      </div>
+    )
   }
 
   return (

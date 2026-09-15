@@ -7,7 +7,10 @@ import sys
 import html
 
 SQL_FILE = "../syh-ruby/db/backup/syh_development_02-05-2018.sql"
+# The two small lists are imported by the app; the two large ones are
+# fetched at runtime, so they are served as static assets instead.
 OUT_DIR = "src/data"
+ASSET_DIR = "public/data"
 
 
 def split_sql_rows(values_str):
@@ -301,9 +304,9 @@ def main():
           f"{len(exhibitions)} exhibitions, {len(characteristics)} characteristics, "
           f"{len(selections)} selections", file=sys.stderr)
 
-    with open(f"{OUT_DIR}/paintings.json", "w") as f:
+    with open(f"{ASSET_DIR}/paintings.json", "w") as f:
         json.dump(paintings, f, ensure_ascii=False, indent=2)
-    with open(f"{OUT_DIR}/exhibitions.json", "w") as f:
+    with open(f"{ASSET_DIR}/exhibitions.json", "w") as f:
         json.dump(exhibitions, f, ensure_ascii=False, indent=2)
     with open(f"{OUT_DIR}/characteristics.json", "w") as f:
         json.dump(characteristics, f, ensure_ascii=False, indent=2)

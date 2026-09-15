@@ -40,10 +40,15 @@ ln -s ../../syh-pages/translations public/translations
 src/
   components/   Navbar, Footer, Carousel, PaintingTable, image wrappers
   pages/        Welcome, Gallery, WhoAreWe, WorldMap, Tunisia
-  data/         Painting, exhibition, characteristic and selection JSON
+  data/         The characteristic and selection lists, imported by the app
   lib/          Painting image URLs and the painting data loader
   index.css     Design tokens, reset and the shared element styles
+public/
+  data/         paintings.json and exhibitions.json, fetched at runtime
 ```
+
+`paintings.json` is 840KB, so it is served as a static file the browser caches
+rather than imported into the bundle, and each route is a separate chunk.
 
 Styling is plain CSS Modules per component, on top of the tokens in `index.css`.
 Colours, radii, spacing and type sizes come from those tokens rather than being

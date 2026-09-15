@@ -1,11 +1,8 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import paintingsData from '../data/paintings.json'
-import type { Painting } from '../types'
 import PaintingImage from '../components/PaintingImage'
+import { loadPaintings, useData } from '../lib/paintingData'
 import styles from './Welcome.module.css'
-
-const paintings = (paintingsData as Painting[]).filter(p => !p.is_private)
 
 function randomSample<T>(arr: T[], n: number): T[] {
   const pool = [...arr]
@@ -17,7 +14,13 @@ function randomSample<T>(arr: T[], n: number): T[] {
 }
 
 export default function Welcome() {
-  const featured = useMemo(() => randomSample(paintings.filter(p => p.title), 3), [])
+  /* The welcome page is readable without the paintings, so it does not wait
+     for them; the three thumbnails fill their places once they arrive. */
+  const { data: paintings } = useData(loadPaintings)
+  const featured = useMemo(
+    () => (paintings ? randomSample(paintings.filter(p => p.title), 3) : []),
+    [paintings]
+  )
 
   return (
     <div className="page">
@@ -55,6 +58,8 @@ export default function Welcome() {
             <span className={styles.your}>2003</span>
           </h2>
           <div className={styles.featuredGrid}>
+            {featured.length === 0 &&
+              [0, 1, 2].map(i => <div key={i} className={styles.featuredPlaceholder} />)}
             {featured.map(p => (
               <Link key={p.id} to={`/gallery?painting=${p.tag}`} className={styles.featuredItem}>
                 <PaintingImage

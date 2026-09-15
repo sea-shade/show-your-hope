@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'
-import paintingsData from '../data/paintings.json'
 import characteristicsData from '../data/characteristics.json'
 import selectionsData from '../data/selections.json'
 import type { Painting, Characteristic, Selection } from '../types'
@@ -8,9 +7,10 @@ import PaintingImage from '../components/PaintingImage'
 import SidekickImage from '../components/SidekickImage'
 import Carousel from '../components/Carousel'
 import PaintingTable from '../components/PaintingTable'
+import DataStatus from '../components/DataStatus'
+import { loadPaintings, useData } from '../lib/paintingData'
 import styles from './Gallery.module.css'
 
-const paintings = (paintingsData as Painting[]).filter(p => !p.is_private)
 const characteristics = characteristicsData as Characteristic[]
 const selections = selectionsData as Selection[]
 
@@ -166,7 +166,7 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
    position is a nicety, so a failure either way is not worth reporting. */
 const POSITION_KEY = 'gallery-last-painting'
 
-function rememberedTag(): string | null {
+function rememberedTag(paintings: Painting[]): string | null {
   try {
     const tag = localStorage.getItem(POSITION_KEY)
     return paintings.some(p => p.tag === tag) ? tag : null
@@ -183,11 +183,28 @@ function remember(tag: string) {
   }
 }
 
-function randomTag(): string {
+function randomTag(paintings: Painting[]): string {
   return paintings[Math.floor(Math.random() * paintings.length)].tag
 }
 
 export default function Gallery() {
+  const { data: paintings, failed } = useData(loadPaintings)
+
+  if (!paintings) {
+    return (
+      <div className="page">
+        <DataStatus failed={failed} />
+      </div>
+    )
+  }
+
+  return <GalleryView paintings={paintings} />
+}
+
+/* Split from the loader above so that every piece of state below - the
+   remembered painting in particular - is initialised once the paintings are
+   actually in hand. */
+function GalleryView({ paintings }: { paintings: Painting[] }) {
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [activeSelections, setActiveSelections] = useState<string[]>([])
   const [search, setSearch] = useState('')
@@ -199,7 +216,7 @@ export default function Gallery() {
      otherwise the gallery picks up where it was left, and a first visit opens
      on a random painting. */
   const [centerTag, setCenterTag] = useState(
-    () => searchParams.get('painting') ?? rememberedTag() ?? randomTag()
+    () => searchParams.get('painting') ?? rememberedTag(paintings) ?? randomTag(paintings)
   )
   const navigate = useNavigate()
   const location = useLocation()
@@ -269,7 +286,7 @@ export default function Gallery() {
 
       return true
     })
-  }, [activeFilters, activeSelections, search])
+  }, [paintings, activeFilters, activeSelections, search])
 
   /* An open painting is what the carousel shows behind the modal, so that
      stepping through the modal walks the carousel with it. A centred painting

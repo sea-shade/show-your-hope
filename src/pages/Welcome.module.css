@@ -95,6 +95,17 @@
   transform: scale(1.04);
 }
 
+/* Holds the row open while the paintings are on their way, so the rest of the
+   page does not jump when they land. The bottom margin stands in for the title
+   and artist lines. */
+.featuredPlaceholder {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 3.2rem;
+  border-radius: 50%;
+  background: var(--color-bg-tertiary);
+}
+
 .featuredTitle {
   font-weight: 600;
   margin-top: 0.75rem;

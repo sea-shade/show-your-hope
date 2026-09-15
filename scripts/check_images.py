@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that every painting tag in src/data/paintings.json has a matching image file
+"""Check that every painting tag in public/data/paintings.json has a matching image file
 in public/painting_images/700/. Run from the syh-react project root:
     python3 scripts/check_images.py
 """
@@ -7,7 +7,7 @@ in public/painting_images/700/. Run from the syh-react project root:
 import json
 import os
 
-DATA_FILE = "src/data/paintings.json"
+DATA_FILE = "public/data/paintings.json"
 IMAGE_DIR = "public/painting_images/700"
 
 paintings = json.load(open(DATA_FILE))
