@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# Show Your Hope
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The website of [Show Your Hope](https://www.showyourhope.net), an art project that
+between 2003 and 2020 collected almost 1000 paintings about Hope from artists all
+over the world and toured them through 45 countries in a DAF truck.
 
-Currently, two official plugins are available:
+A React + TypeScript + Vite single-page app, deployed to GitHub Pages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Running locally
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The paintings, their photographs, the filter icons and the catalogue translations
+live in a separate repository, [`syh-pages`](https://github.com/thelamb/syh-pages),
+and are copied into `public/` by the deploy workflow. They are gitignored here, so
+a plain `npm run dev` shows the site with placeholder images. To see the real ones,
+check out `syh-pages` alongside this repo and link them in:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+ln -s ../../syh-pages/painting_images public/painting_images
+ln -s ../../syh-pages/icons public/icons
+ln -s ../../syh-pages/translations public/translations
 ```
+
+## Scripts
+
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Vite dev server with HMR |
+| `npm run build` | Type-check with `tsc -b`, then build to `dist/` |
+| `npm run lint` | ESLint over the whole repo |
+| `npm run preview` | Serve the production build locally |
+
+## Layout
+
+```
+src/
+  components/   Navbar, Footer, Carousel, PaintingTable, image wrappers
+  pages/        Welcome, Gallery, WhoAreWe, WorldMap, Tunisia
+  data/         Painting, exhibition, characteristic and selection JSON
+  lib/          Painting image URLs and the painting data loader
+  index.css     Design tokens, reset and the shared element styles
+```
+
+Styling is plain CSS Modules per component, on top of the tokens in `index.css`.
+Colours, radii, spacing and type sizes come from those tokens rather than being
+written out per file.
+
+Routing uses `HashRouter`, because GitHub Pages serves no rewrites.
+
+## Deployment
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which fetches the assets
+from `syh-pages`, builds, and publishes `dist/` to GitHub Pages.

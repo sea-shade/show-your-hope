@@ -36,7 +36,7 @@
 }
 
 .sectionAlt {
-  background: var(--color-bg-section);
+  background: var(--color-bg-secondary);
   margin: 0 -1.5rem;
   padding: 3rem 1.5rem;
 }

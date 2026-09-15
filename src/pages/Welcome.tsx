@@ -8,8 +8,12 @@ import styles from './Welcome.module.css'
 const paintings = (paintingsData as Painting[]).filter(p => !p.is_private)
 
 function randomSample<T>(arr: T[], n: number): T[] {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, n)
+  const pool = [...arr]
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+  return pool.slice(0, n)
 }
 
 export default function Welcome() {
