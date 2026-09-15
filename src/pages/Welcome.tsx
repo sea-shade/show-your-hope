@@ -52,7 +52,7 @@ export default function Welcome() {
           </h2>
           <div className={styles.featuredGrid}>
             {featured.map(p => (
-              <Link key={p.id} to="/gallery" className={styles.featuredItem}>
+              <Link key={p.id} to={`/gallery?painting=${p.tag}`} className={styles.featuredItem}>
                 <PaintingImage
                   tag={p.tag}
                   alt={p.title}

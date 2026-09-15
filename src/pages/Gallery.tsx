@@ -1,12 +1,14 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import paintingsData from '../data/paintings.json'
 import characteristicsData from '../data/characteristics.json'
 import selectionsData from '../data/selections.json'
 import type { Painting, Characteristic, Selection } from '../types'
 import PaintingImage from '../components/PaintingImage'
+import SidekickImage from '../components/SidekickImage'
 import styles from './Gallery.module.css'
 
-const paintings = paintingsData as Painting[]
+const paintings = (paintingsData as Painting[]).filter(p => !p.is_private)
 const characteristics = characteristicsData as Characteristic[]
 const selections = selectionsData as Selection[]
 
@@ -68,11 +70,18 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
       <div className={styles.modal} onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={painting.title}>
         <button className={styles.modalClose} onClick={onClose} aria-label="Close">×</button>
         <div className={styles.modalBody}>
-          <PaintingImage
-            tag={painting.tag}
-            alt={painting.title}
-            className={styles.modalImg}
-          />
+          <div className={styles.modalImages}>
+            <PaintingImage
+              tag={painting.tag}
+              alt={painting.title}
+              className={styles.modalImg}
+            />
+            <SidekickImage
+              tag={painting.tag}
+              alt={painting.artist.fullname}
+              className={styles.modalSidekick}
+            />
+          </div>
           <div className={styles.modalInfo}>
             <div className={styles.modalNav}>
               <button className={styles.modalNavBtn} onClick={onPrev}>&lt; Previous</button>
@@ -125,7 +134,13 @@ export default function Gallery() {
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [activeSelections, setActiveSelections] = useState<string[]>([])
   const [search, setSearch] = useState('')
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const location = useLocation()
+  /* Opening a painting pushes a history entry, so closing it goes back to
+     wherever it was opened from: the grid, the world map or the welcome page.
+     Landing on the gallery directly leaves nothing to go back to. */
+  const isEntryPoint = useRef(location.key === 'default')
 
   function toggleFilter(value: string) {
     setActiveFilters(prev =>
@@ -141,8 +156,6 @@ export default function Gallery() {
 
   const filtered = useMemo(() => {
     return paintings.filter(p => {
-      if (p.is_private) return false
-
       const filterStr = getFilterString(p)
       if (!activeFilters.every(f => filterStr.includes(f))) return false
       if (!activeSelections.every(s => p.selections.includes(s))) return false
@@ -161,13 +174,19 @@ export default function Gallery() {
     })
   }, [activeFilters, activeSelections, search])
 
-  const selected = selectedIndex !== null ? filtered[selectedIndex] : undefined
+  const selectedTag = searchParams.get('painting')
+  const selected = paintings.find(p => p.tag === selectedTag)
+
+  function close() {
+    if (isEntryPoint.current) setSearchParams({}, { replace: true })
+    else navigate(-1)
+  }
 
   function step(delta: number) {
-    setSelectedIndex(i => {
-      if (i === null || filtered.length === 0) return i
-      return (i + delta + filtered.length) % filtered.length
-    })
+    if (filtered.length === 0) return
+    const i = filtered.findIndex(p => p.tag === selectedTag)
+    const next = i < 0 ? filtered[0] : filtered[(i + delta + filtered.length) % filtered.length]
+    setSearchParams({ painting: next.tag }, { replace: true })
   }
 
   return (
@@ -224,11 +243,11 @@ export default function Gallery() {
         </div>
 
         <div className={styles.grid}>
-          {filtered.map((p, i) => (
+          {filtered.map(p => (
             <button
               key={p.id}
               className={styles.card}
-              onClick={() => setSelectedIndex(i)}
+              onClick={() => setSearchParams({ painting: p.tag })}
             >
               <PaintingImage
                 tag={p.tag}
@@ -251,7 +270,7 @@ export default function Gallery() {
       {selected && (
         <PaintingModal
           painting={selected}
-          onClose={() => setSelectedIndex(null)}
+          onClose={close}
           onPrev={() => step(-1)}
           onNext={() => step(1)}
         />

@@ -183,7 +183,19 @@
   padding: 1.5rem;
 }
 
+.modalImages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .modalImg {
+  max-width: 300px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.modalSidekick {
   max-width: 300px;
   border-radius: 6px;
   object-fit: cover;
@@ -273,5 +285,5 @@
 
 @media (max-width: 600px) {
   .modalBody { grid-template-columns: 1fr; }
-  .modalImg { max-width: 100%; }
+  .modalImg, .modalSidekick { max-width: 100%; }
 }

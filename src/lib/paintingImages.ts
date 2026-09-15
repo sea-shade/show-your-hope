@@ -4,6 +4,6 @@ export function galleryImageUrl(tag: string): string {
   return `/painting_images/700/${tag}.jpg`
 }
 
-export function markerImageUrl(tag: string): string {
+export function sidekickImageUrl(tag: string): string {
   return `/painting_images/sidekick/${tag}_sk.jpg`
 }

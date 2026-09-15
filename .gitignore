@@ -15,6 +15,7 @@ dist-ssr
 # Assets fetched from the syh-pages repository during the Pages build
 /public/painting_images
 /public/translations
+/public/icons
 
 # Editor directories and files
 .vscode/*

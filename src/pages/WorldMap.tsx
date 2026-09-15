@@ -1,72 +1,130 @@
-import { useMemo } from 'react'
-import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet'
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { divIcon } from 'leaflet'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import paintingsData from '../data/paintings.json'
 import exhibitionsData from '../data/exhibitions.json'
 import type { Painting, Exhibition } from '../types'
+import PaintingImage from '../components/PaintingImage'
+import SidekickImage from '../components/SidekickImage'
 import styles from './WorldMap.module.css'
 
-const paintings = paintingsData as Painting[]
+const paintings = (paintingsData as Painting[]).filter(p => !p.is_private)
 const exhibitions = exhibitionsData as Exhibition[]
+
+type MarkerType = 'artist' | 'painting' | 'exhibition'
+
+const LAYERS: { type: MarkerType; label: string; color: string }[] = [
+  { type: 'painting', label: 'Paintings', color: '#2ecc71' },
+  { type: 'artist', label: 'Artists', color: '#3498db' },
+  { type: 'exhibition', label: 'Exhibitions', color: '#e67e22' },
+]
+
+const ICON_URL: Record<MarkerType, string> = {
+  artist: '/icons/artist.png',
+  painting: '/icons/painting.png',
+  exhibition: '/icons/exhibition.png',
+}
+
+/** The icons are black silhouettes, so they sit on a coloured disc and are
+ *  flipped to white. Shared by the markers and the legend. */
+function badge(type: MarkerType, color: string): string {
+  return `<span class="${styles.badge}" style="background:${color}">` +
+    `<img src="${ICON_URL[type]}" alt="">` +
+    `</span>`
+}
+
+const ICONS = Object.fromEntries(
+  LAYERS.map(l => [
+    l.type,
+    divIcon({
+      html: badge(l.type, l.color),
+      className: styles.marker,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      popupAnchor: [0, -16],
+    }),
+  ])
+) as Record<MarkerType, ReturnType<typeof divIcon>>
 
 interface MarkerData {
   id: string
   lat: number
   lng: number
-  label: string
-  type: 'artist' | 'painting' | 'exhibition'
+  type: MarkerType
+  /** Painting to open in the gallery. Empty for exhibitions. */
+  tag: string
+  title: string
+  subtitle: string
 }
 
 export default function WorldMap() {
+  const [hidden, setHidden] = useState<MarkerType[]>(['artist'])
+
   const markers = useMemo<MarkerData[]>(() => {
     const result: MarkerData[] = []
     const seenArtists = new Set<number>()
 
     for (const p of paintings) {
-      if (p.is_private) continue
-
       const lat = p.artist.city?.latitude ?? p.artist.country.latitude
       const lng = p.artist.city?.longitude ?? p.artist.country.longitude
 
       if (!seenArtists.has(p.artist.id)) {
         seenArtists.add(p.artist.id)
-        result.push({ id: `artist-${p.artist.id}`, lat, lng, label: p.artist.fullname, type: 'artist' })
+        result.push({
+          id: `artist-${p.artist.id}`,
+          lat, lng,
+          type: 'artist',
+          tag: p.tag,
+          title: p.artist.fullname,
+          subtitle: p.artist.city?.name ?? p.artist.country.name,
+        })
       }
 
-      result.push({ id: `painting-${p.id}`, lat, lng, label: p.title, type: 'painting' })
+      result.push({
+        id: `painting-${p.id}`,
+        lat, lng,
+        type: 'painting',
+        tag: p.tag,
+        title: p.title,
+        subtitle: p.artist.fullname,
+      })
     }
 
     for (const e of exhibitions) {
-      result.push({ id: `exhibition-${e.id}`, lat: e.latitude, lng: e.longitude, label: e.name, type: 'exhibition' })
+      result.push({
+        id: `exhibition-${e.id}`,
+        lat: e.latitude,
+        lng: e.longitude,
+        type: 'exhibition',
+        tag: '',
+        title: e.name,
+        subtitle: [e.city, e.country].filter(Boolean).join(', '),
+      })
     }
 
     return result
   }, [])
 
-  const colorMap: Record<MarkerData['type'], string> = {
-    artist: '#3498db',
-    painting: '#2ecc71',
-    exhibition: '#e67e22',
-  }
-
-  const radiusMap: Record<MarkerData['type'], number> = {
-    artist: 8,
-    painting: 6,
-    exhibition: 8,
+  function toggleLayer(type: MarkerType) {
+    setHidden(prev => (prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]))
   }
 
   return (
     <div className="page">
       <div className={styles.legendBar}>
         <div className={styles.container}>
-          <span className={styles.legendItem}>
-            <span className={styles.dot} style={{ background: '#3498db' }} /> Artists
-          </span>
-          <span className={styles.legendItem}>
-            <span className={styles.dot} style={{ background: '#2ecc71' }} /> Paintings
-          </span>
-          <span className={styles.legendItem}>
-            <span className={styles.dot} style={{ background: '#e67e22' }} /> Exhibitions
-          </span>
+          {LAYERS.map(l => (
+            <button
+              key={l.type}
+              className={`${styles.legendItem} ${hidden.includes(l.type) ? styles.legendOff : ''}`}
+              onClick={() => toggleLayer(l.type)}
+              aria-pressed={!hidden.includes(l.type)}
+            >
+              <span dangerouslySetInnerHTML={{ __html: badge(l.type, l.color) }} />
+              {l.label}
+            </button>
+          ))}
         </div>
       </div>
       <MapContainer
@@ -79,15 +137,27 @@ export default function WorldMap() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
-        {markers.map(m => (
-          <CircleMarker
-            key={m.id}
-            center={[m.lat, m.lng]}
-            radius={radiusMap[m.type]}
-            pathOptions={{ color: colorMap[m.type], fillColor: colorMap[m.type], fillOpacity: 0.8 }}
-          >
-            <Popup>{m.label}</Popup>
-          </CircleMarker>
+        {markers.filter(m => !hidden.includes(m.type)).map(m => (
+          <Marker key={m.id} position={[m.lat, m.lng]} icon={ICONS[m.type]}>
+            <Popup>
+              {m.tag ? (
+                <Link to={`/gallery?painting=${m.tag}`} className={styles.popup}>
+                  {m.type === 'artist' ? (
+                    <SidekickImage tag={m.tag} alt={m.title} className={styles.popupImg} />
+                  ) : (
+                    <PaintingImage tag={m.tag} alt={m.title} className={styles.popupImg} />
+                  )}
+                  <span className={styles.popupTitle}>{m.title}</span>
+                  <span className={styles.popupSub}>{m.subtitle}</span>
+                </Link>
+              ) : (
+                <span className={styles.popup}>
+                  <span className={styles.popupTitle}>{m.title}</span>
+                  <span className={styles.popupSub}>{m.subtitle}</span>
+                </span>
+              )}
+            </Popup>
+          </Marker>
         ))}
       </MapContainer>
     </div>

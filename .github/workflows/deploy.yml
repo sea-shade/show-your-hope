@@ -17,6 +17,7 @@ jobs:
           sparse-checkout: |
             painting_images
             translations
+            icons
           sparse-checkout-cone-mode: false
           path: syh-pages
 
@@ -24,6 +25,7 @@ jobs:
         run: |
           cp -r syh-pages/painting_images public/painting_images
           cp -r syh-pages/translations public/translations
+          cp -r syh-pages/icons public/icons
 
       - uses: actions/setup-node@v4
         with:
