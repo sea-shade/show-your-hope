@@ -150,6 +150,28 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
   )
 }
 
+/* The gallery reopens on the painting you were last looking at, as the
+   original site did. Storage can be unavailable or full, and remembering the
+   position is a nicety, so a failure either way is not worth reporting. */
+const POSITION_KEY = 'gallery-last-painting'
+
+function rememberedTag(): string | null {
+  try {
+    const tag = localStorage.getItem(POSITION_KEY)
+    return paintings.some(p => p.tag === tag) ? tag : null
+  } catch {
+    return null
+  }
+}
+
+function remember(tag: string) {
+  try {
+    localStorage.setItem(POSITION_KEY, tag)
+  } catch {
+    // The gallery works just as well without it.
+  }
+}
+
 function randomTag(): string {
   return paintings[Math.floor(Math.random() * paintings.length)].tag
 }
@@ -162,10 +184,11 @@ export default function Gallery() {
   const filterBarRef = useRef<HTMLDivElement>(null)
   const [searchParams, setSearchParams] = useSearchParams()
   /* The painting in the middle of the carousel, which is also the row
-     highlighted in the table. A link to a particular painting centres on it;
-     otherwise the gallery opens on a random one, as the original did. */
+     highlighted in the table. A link to a particular painting centres on it,
+     otherwise the gallery picks up where it was left, and a first visit opens
+     on a random painting. */
   const [centerTag, setCenterTag] = useState(
-    () => searchParams.get('painting') ?? randomTag()
+    () => searchParams.get('painting') ?? rememberedTag() ?? randomTag()
   )
   const navigate = useNavigate()
   const location = useLocation()
@@ -177,6 +200,8 @@ export default function Gallery() {
   const view = searchParams.get('view') === 'grid' ? 'grid' : 'gallery'
   const selectedTag = searchParams.get('painting')
   const selected = paintings.find(p => p.tag === selectedTag)
+
+  useEffect(() => remember(centerTag), [centerTag])
 
   const setParam = useCallback(
     (key: string, value: string | null, replace = false) => {
