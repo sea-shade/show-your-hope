@@ -12,6 +12,8 @@ export default function PaintingImage({ tag, alt, className }: PaintingImageProp
       src={galleryImageUrl(tag)}
       alt={alt}
       className={className}
+      loading="lazy"
+      decoding="async"
       onError={e => {
         const img = e.target as HTMLImageElement
         if (img.src.endsWith(NO_IMAGE_URL)) return

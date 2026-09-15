@@ -189,6 +189,25 @@
   object-fit: cover;
 }
 
+.modalNav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.modalNavBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-your);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.modalNavBtn:hover {
+  text-decoration: underline;
+}
+
 .modalTitle {
   font-size: 1.4rem;
   margin-bottom: 0.25rem;
@@ -221,6 +240,14 @@
   color: var(--color-text-muted);
 }
 
+.selectionTag {
+  background: var(--color-selected-secondary);
+  border-radius: 20px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
 .modalStory {
   line-height: 1.7;
   color: var(--color-text);
@@ -233,6 +260,7 @@
   height: 0;
   overflow: hidden;
   border-radius: 6px;
+  margin-bottom: 0.75rem;
 }
 
 .modalVideo iframe {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import paintingsData from '../data/paintings.json'
 import characteristicsData from '../data/characteristics.json'
 import selectionsData from '../data/selections.json'
@@ -31,18 +31,42 @@ function getYouTubeId(url: string): string | null {
   return match ? match[1] : null
 }
 
+const SELL_STATUS_LABELS: Record<string, string> = {
+  sold: 'Sold',
+  dont_sell: 'Not for sale',
+  free_to_sell: 'For sale',
+  own_discretion: 'Contact us',
+}
+
 interface ModalProps {
   painting: Painting
   onClose: () => void
+  onPrev: () => void
+  onNext: () => void
 }
 
-function PaintingModal({ painting, onClose }: ModalProps) {
-  const videoId = painting.videos.length > 0 ? getYouTubeId(painting.videos[0].link) : null
+function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onPrev()
+      if (e.key === 'ArrowRight') onNext()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [onClose, onPrev, onNext])
 
   return (
     <div className={styles.modalBackdrop} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <button className={styles.modalClose} onClick={onClose}>×</button>
+      <div className={styles.modal} onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={painting.title}>
+        <button className={styles.modalClose} onClick={onClose} aria-label="Close">×</button>
         <div className={styles.modalBody}>
           <PaintingImage
             tag={painting.tag}
@@ -50,9 +74,18 @@ function PaintingModal({ painting, onClose }: ModalProps) {
             className={styles.modalImg}
           />
           <div className={styles.modalInfo}>
+            <div className={styles.modalNav}>
+              <button className={styles.modalNavBtn} onClick={onPrev}>&lt; Previous</button>
+              <button className={styles.modalNavBtn} onClick={onNext}>Next &gt;</button>
+            </div>
             <h2 className={styles.modalTitle}>{painting.title}</h2>
             <p className={styles.modalArtist}>{painting.artist.fullname}</p>
-            <p className={styles.modalMeta}>{painting.artist.country.name} · {painting.date}</p>
+            <p className={styles.modalMeta}>
+              {painting.artist.country.name} · {painting.date} · #{painting.tag}
+            </p>
+            <p className={styles.modalMeta}>
+              {SELL_STATUS_LABELS[painting.sell_status] ?? 'Not for sale'}
+            </p>
             {painting.characteristics.length > 0 && (
               <div className={styles.modalTags}>
                 {painting.characteristics.map(c => (
@@ -60,16 +93,27 @@ function PaintingModal({ painting, onClose }: ModalProps) {
                 ))}
               </div>
             )}
-            <p className={styles.modalStory}>{painting.story}</p>
-            {videoId && (
-              <div className={styles.modalVideo}>
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-                  allowFullScreen
-                  title={`${painting.title} video`}
-                />
+            {painting.selections.length > 0 && (
+              <div className={styles.modalTags}>
+                {painting.selections.map(s => (
+                  <span key={s} className={styles.selectionTag}>{s}</span>
+                ))}
               </div>
             )}
+            <p className={styles.modalStory}>{painting.story}</p>
+            {painting.videos.map((v, i) => {
+              const videoId = getYouTubeId(v.link)
+              if (!videoId) return null
+              return (
+                <div key={i} className={styles.modalVideo}>
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                    allowFullScreen
+                    title={`${painting.title} video ${i + 1}`}
+                  />
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -81,7 +125,7 @@ export default function Gallery() {
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [activeSelections, setActiveSelections] = useState<string[]>([])
   const [search, setSearch] = useState('')
-  const [selected, setSelected] = useState<Painting | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   function toggleFilter(value: string) {
     setActiveFilters(prev =>
@@ -116,6 +160,15 @@ export default function Gallery() {
       return true
     })
   }, [activeFilters, activeSelections, search])
+
+  const selected = selectedIndex !== null ? filtered[selectedIndex] : undefined
+
+  function step(delta: number) {
+    setSelectedIndex(i => {
+      if (i === null || filtered.length === 0) return i
+      return (i + delta + filtered.length) % filtered.length
+    })
+  }
 
   return (
     <div className="page">
@@ -171,11 +224,11 @@ export default function Gallery() {
         </div>
 
         <div className={styles.grid}>
-          {filtered.map(p => (
+          {filtered.map((p, i) => (
             <button
               key={p.id}
               className={styles.card}
-              onClick={() => setSelected(p)}
+              onClick={() => setSelectedIndex(i)}
             >
               <PaintingImage
                 tag={p.tag}
@@ -195,7 +248,14 @@ export default function Gallery() {
         </div>
       </div>
 
-      {selected && <PaintingModal painting={selected} onClose={() => setSelected(null)} />}
+      {selected && (
+        <PaintingModal
+          painting={selected}
+          onClose={() => setSelectedIndex(null)}
+          onPrev={() => step(-1)}
+          onNext={() => step(1)}
+        />
+      )}
     </div>
   )
 }
