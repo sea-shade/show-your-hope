@@ -1,11 +1,47 @@
-.filterBar {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 1.5rem;
+/* The carousel and its table are one screen, as they were on the original
+   site: the filter bar and table take what they need and the carousel fills
+   the rest. Below the minimum the page scrolls instead of squeezing further. */
+.galleryPage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 560px;
 }
 
-.filterGroup {
-  margin-bottom: 0.75rem;
+/* On a phone the filter bar alone takes three rows, which would leave the
+   paintings too small to see. The page scrolls to the table instead. */
+@media (max-width: 700px) {
+  .galleryPage {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+/* The auto side margins that centre a .container stop a flex item stretching,
+   and a flex item will not shrink below its content width, which for the
+   table is its widest title. Both are settled by asking for the full width. */
+.galleryPage > * {
+  width: 100%;
+  min-width: 0;
+}
+
+.tableBox {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.filterBar {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e3ddc2;
+  margin-bottom: 1rem;
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
 .filterLabel {
@@ -14,17 +50,58 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
-  margin-right: 0.5rem;
 }
 
-.filterButtons {
+.filterGroup {
+  position: relative;
+}
+
+.groupBtn {
   display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.groupBtn:hover,
+.groupBtn.groupOpen {
+  border-color: var(--color-your);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  z-index: 100;
+  display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-top: 0.4rem;
+  width: max-content;
+  max-width: min(90vw, 460px);
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: var(--color-bg-secondary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.activeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
 }
 
 .filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   padding: 0.25rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -33,39 +110,42 @@
   font-size: 0.85rem;
   transition: all 0.15s;
   color: var(--color-text);
+  text-transform: capitalize;
 }
 
 .filterBtn:hover {
   border-color: var(--color-your);
-  color: var(--color-your);
 }
 
 .filterBtn.active {
   background: var(--color-selected);
   border-color: #7bc8d4;
-  color: inherit;
 }
 
 .filterBtn.activeSelection {
   background: var(--color-selected-secondary);
   border-color: #7dc455;
-  color: inherit;
 }
 
-.searchRow {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 0.75rem;
+.chipClose {
+  font-weight: bold;
+  color: var(--color-text-muted);
+}
+
+.filterIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .searchInput {
   flex: 1;
-  max-width: 400px;
-  padding: 0.4rem 0.75rem;
+  min-width: 180px;
+  max-width: 320px;
+  padding: 0.35rem 0.75rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
 }
 
 .searchInput:focus {
@@ -76,6 +156,35 @@
 .count {
   font-size: 0.85rem;
   color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.viewToggle {
+  display: flex;
+  margin-left: auto;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.viewBtn {
+  padding: 0.3rem 0.9rem;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.viewBtn.viewActive {
+  background: var(--color-selected);
+}
+
+.carouselHint {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0.5rem 0;
 }
 
 .grid {

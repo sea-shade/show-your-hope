@@ -1,0 +1,72 @@
+/* --w is the width of a centred horizontal painting, measured from the box the
+   carousel is given. Every other length in the carousel derives from it, so
+   the whole row scales with one value. */
+.carousel {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+  user-select: none;
+}
+
+.item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.3s linear, opacity 0.3s linear;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.arrow:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.arrow:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.arrowPrev { left: 0.75rem; }
+.arrowNext { right: 0.75rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .item { transition: none; }
+}
+
+/* Without a screen to fill, the carousel has no height of its own: every
+   painting in it is positioned absolutely. */
+@media (max-width: 700px) {
+  .carousel {
+    flex: none;
+    height: 64vw;
+  }
+}
