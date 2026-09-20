@@ -104,5 +104,6 @@
 }
 
 @media (max-width: 768px) {
+  .section { padding: 2rem 1.25rem; }
   .splitRow { grid-template-columns: 1fr; }
 }

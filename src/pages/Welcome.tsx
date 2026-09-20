@@ -24,12 +24,10 @@ export default function Welcome() {
 
   return (
     <div className="page">
-      <div className={styles.hero}>
-        <img src="/hero.jpg" alt="Show Your Hope" className={styles.heroImg} />
-      </div>
+      <img src="/hero.jpg" alt="Show Your Hope" className={styles.heroImg} />
 
       <div className="container">
-        <section className={`${styles.section} ${styles.statement}`}>
+        <section className={`${styles.section} ${styles.sectionAlt} ${styles.statement}`}>
           <p className={styles.statementText}>
             Between <span className={styles.show}>2003</span> and{' '}
             <span className={styles.show}>2020</span> we have collected almost{' '}
@@ -39,93 +37,7 @@ export default function Welcome() {
           </p>
         </section>
 
-        <section className={styles.section}>
-          <p className={styles.intro}>
-            <span className={`syh-logo ${styles.show}`}>Show </span>
-            <span className={`syh-logo ${styles.your}`}>Your </span>
-            <span className={`syh-logo ${styles.hope}`}>Hope</span>
-            {' '}is an art project that serves as a communication project between the participating{' '}
-            <span className={`syh-logo ${styles.show}`}>artists</span>, the{' '}
-            <span className={`syh-logo ${styles.your}`}>audience</span>, and{' '}
-            <span className={`syh-logo ${styles.hope}`}>you</span>.
-          </p>
-        </section>
-
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            Over <span className={styles.show}>1000</span> paintings showing{' '}
-            <span className={styles.hope}>Hope</span> since{' '}
-            <span className={styles.your}>2003</span>
-          </h2>
-          <div className={styles.featuredGrid}>
-            {featured.length === 0 &&
-              [0, 1, 2].map(i => <div key={i} className={styles.featuredPlaceholder} />)}
-            {featured.map(p => (
-              <Link key={p.id} to={`/gallery?painting=${p.tag}`} className={styles.featuredItem}>
-                <PaintingImage
-                  tag={p.tag}
-                  alt={p.title}
-                  className={styles.featuredImg}
-                />
-                <div className={styles.featuredTitle}>{p.title}</div>
-                <div className={styles.featuredArtist}>by {p.artist.fullname}</div>
-              </Link>
-            ))}
-          </div>
-          <p className={styles.featuredHint}>
-            Randomly selected. <Link to="/gallery">Explore the full gallery →</Link>
-          </p>
-        </section>
-
-        <section className={`${styles.section} ${styles.sectionAlt}`}>
-          <p className={styles.tunisiaTeaser}>
-            In September 2018 a tour started to Tunisia, a 5000 km journey visiting all 21
-            gouvernerates of the country.{' '}
-            <Link to="/tunisia">Read about the tour →</Link>
-          </p>
-        </section>
-
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>In the news</h2>
-          <div className={styles.videoGrid}>
-            {[
-              { id: 'cS4BA0hA0WE', title: 'Interview Martin Voorbij' },
-              { id: 'gEVXyilAkRE', title: 'Show Your Hope introduction film in Istria' },
-              { id: 'UljTW1f4KW0', title: 'Show Your Hope in Banja Luka' },
-            ].map(v => (
-              <div key={v.id}>
-                <div className={styles.videoWrapper}>
-                  <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${v.id}?showinfo=0`}
-                    allowFullScreen
-                    title={v.title}
-                  />
-                </div>
-                <div className={styles.videoTitle}>{v.title}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className={`${styles.section} ${styles.sectionAlt}`}>
-          <div className={styles.splitRow}>
-            <div className={styles.splitText}>
-              <h2>
-                We have travelled to <span className={styles.show}>45+</span> countries
-              </h2>
-              <p>
-                Click the map to navigate through Artists, Paintings and Exhibitions of{' '}
-                Show Your Hope.
-              </p>
-              <Link to="/worldmap" className={styles.mapLink}>Explore the World Map →</Link>
-            </div>
-            <div>
-              <img src="/syh_map_overview.png" alt="World map overview" className={styles.splitImg} />
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.section}>
+        <section className={`${styles.section} ${styles.prose}`}>
           <h2 className={styles.sectionTitle}>Final exhibition and catalog</h2>
           <p>
             In October 2022 we organized the last exhibition with all the paintings at VDLART
@@ -147,7 +59,7 @@ export default function Welcome() {
           </ul>
         </section>
 
-        <section className={`${styles.section} ${styles.sectionAlt}`}>
+        <section className={`${styles.section} ${styles.sectionAlt} ${styles.prose}`}>
           <h2 className={styles.sectionTitle}>Thank you</h2>
           <p>
             Thank you all for these wonderful years. Thank you artists, thank you audience, thank
@@ -180,6 +92,92 @@ export default function Welcome() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className={styles.section}>
+          <p className={styles.intro}>
+            <span className={`syh-logo ${styles.show}`}>Show </span>
+            <span className={`syh-logo ${styles.your}`}>Your </span>
+            <span className={`syh-logo ${styles.hope}`}>Hope</span>
+            {' '}is an art project that serves as a communication project between the participating{' '}
+            <span className={`syh-logo ${styles.show}`}>artists</span>, the{' '}
+            <span className={`syh-logo ${styles.your}`}>audience</span>, and{' '}
+            <span className={`syh-logo ${styles.hope}`}>you</span>.
+          </p>
+        </section>
+
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
+          <h2 className={styles.sectionTitle}>In the news</h2>
+          <div className={styles.videoGrid}>
+            {[
+              { id: 'cS4BA0hA0WE', title: 'Interview Martin Voorbij' },
+              { id: 'gEVXyilAkRE', title: 'Show Your Hope introduction film in Istria' },
+              { id: 'UljTW1f4KW0', title: 'Show Your Hope in Banja Luka' },
+            ].map(v => (
+              <div key={v.id}>
+                <div className={styles.videoWrapper}>
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${v.id}?showinfo=0`}
+                    allowFullScreen
+                    title={v.title}
+                  />
+                </div>
+                <div className={styles.videoTitle}>{v.title}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>
+            Over <span className={styles.show}>1000</span> paintings showing{' '}
+            <span className={styles.hope}>Hope</span> since{' '}
+            <span className={styles.your}>2003</span>
+          </h2>
+          <div className={styles.featuredGrid}>
+            {featured.length === 0 &&
+              [0, 1, 2].map(i => <div key={i} className={styles.featuredPlaceholder} />)}
+            {featured.map(p => (
+              <Link key={p.id} to={`/gallery?painting=${p.tag}`} className={styles.featuredItem}>
+                <PaintingImage
+                  tag={p.tag}
+                  alt={p.title}
+                  className={styles.featuredImg}
+                />
+                <div className={styles.featuredTitle}>{p.title}</div>
+                <div className={styles.featuredArtist}>by {p.artist.fullname}</div>
+              </Link>
+            ))}
+          </div>
+          <p className={styles.featuredHint}>
+            Randomly selected. <Link to="/gallery">Explore the full gallery →</Link>
+          </p>
+        </section>
+
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
+          <div className={styles.splitRow}>
+            <div className={styles.splitText}>
+              <h2>
+                We have travelled to <span className={styles.show}>45+</span> countries
+              </h2>
+              <p>
+                Click the map to navigate through Artists, Paintings and Exhibitions of{' '}
+                Show Your Hope.
+              </p>
+              <Link to="/worldmap" className={styles.mapLink}>Explore the World Map →</Link>
+            </div>
+            <div>
+              <img src="/syh_map_overview.png" alt="World map overview" className={styles.splitImg} />
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <p className={styles.tunisiaTeaser}>
+            In September 2018 a tour started to Tunisia, a 5000 km journey visiting all 21
+            gouvernerates of the country.{' '}
+            <Link to="/tunisia">Read about the tour →</Link>
+          </p>
         </section>
       </div>
     </div>

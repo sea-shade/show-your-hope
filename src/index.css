@@ -133,10 +133,17 @@ img {
   height: auto;
 }
 
+/* The sections are boxes that run nearly the full window, as on the site this
+   one is rebuilt from, so the gutter rather than a column width sets how wide
+   they get. Anything that is a column of prose caps its own measure. */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 3rem;
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 0 1rem;
+  }
 }
 
 .page {

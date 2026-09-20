@@ -1,14 +1,10 @@
-.hero {
-  position: relative;
-  width: 100%;
-  height: clamp(220px, 34vw, 400px);
-  overflow: hidden;
-}
-
+/* The painting is the page's opening statement and carries its own lettering,
+   so it is shown whole and edge to edge rather than cropped to a band. */
 .heroImg {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  margin-bottom: 2rem;
 }
 
 .show { color: var(--color-show); }
@@ -41,8 +37,23 @@
 }
 
 .statement {
-  background: var(--color-bg-tertiary);
   text-align: center;
+}
+
+/* The boxes are as wide as the window, so the sections that are paragraphs
+   rather than grids hold themselves to a readable measure. */
+.prose p,
+.prose ul {
+  max-width: 70ch;
+}
+
+.prose p + p,
+.prose ul {
+  margin-top: 1rem;
+}
+
+.prose .videoGrid {
+  margin-top: 2rem;
 }
 
 .statementText {
@@ -191,6 +202,7 @@
 }
 
 @media (max-width: 768px) {
+  .section { padding: 2rem 1.25rem; }
   .featuredGrid { grid-template-columns: 1fr; }
   .videoGrid { grid-template-columns: 1fr; }
   .splitRow { grid-template-columns: 1fr; }
