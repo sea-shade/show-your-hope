@@ -14,6 +14,13 @@
   --color-your: #0E6B34;
   --color-hope: #9F5904;
 
+  /* The wordmark's own three colours, as the original site sets them. They are
+     the logo's identity rather than a text colour, so they stay as they are
+     and the tuned triad above carries everything that has to be read. */
+  --color-show-mark: #90EE90;
+  --color-your-mark: #008000;
+  --color-hope-mark: #FFA500;
+
   --color-bg-primary: #FFFCE6;
   --color-bg-secondary: #F4FFD9;
   --color-bg-tertiary: #F3EFD9;

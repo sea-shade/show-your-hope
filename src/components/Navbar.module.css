@@ -20,7 +20,7 @@
 .logo {
   font-family: var(--font-display);
   font-weight: bold;
-  font-size: var(--text-lg);
+  font-size: 2rem;
   text-decoration: none;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -30,9 +30,9 @@
   text-decoration: none;
 }
 
-.show { color: var(--color-show); }
-.your { color: var(--color-your); }
-.hope { color: var(--color-hope); }
+.show { color: var(--color-show-mark); }
+.your { color: var(--color-your-mark); }
+.hope { color: var(--color-hope-mark); }
 
 .links {
   list-style: none;

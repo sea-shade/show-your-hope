@@ -11,12 +11,26 @@
 .your { color: var(--color-your); }
 .hope { color: var(--color-hope); }
 
+/* The sections stack flush into a single column rather than sitting apart as
+   separate boxes, so neighbours share one border line and only the two ends
+   of the stack are rounded. The shade alternates to break up the run. */
 .section {
   padding: 3rem 2rem;
-  margin-bottom: 2rem;
   border: 2px solid var(--color-border-box);
-  border-radius: var(--radius-md);
   background: var(--color-bg-secondary);
+}
+
+.section + .section {
+  border-top: none;
+}
+
+.section:first-of-type {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.section:last-of-type {
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  margin-bottom: 2rem;
 }
 
 .sectionAlt {

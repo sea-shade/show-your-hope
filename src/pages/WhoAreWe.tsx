@@ -17,7 +17,7 @@ export default function WhoAreWe() {
       </div>
 
       <div className="container">
-        <section className={styles.section}>
+        <section className={`${styles.section} ${styles.sectionAlt}`}>
           <h2>Our Aim?</h2>
           <blockquote className={styles.quote}>
             &ldquo;To <span className={styles.show}>show</span> and share universal beauty through

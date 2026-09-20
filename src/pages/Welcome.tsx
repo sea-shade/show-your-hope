@@ -38,28 +38,6 @@ export default function Welcome() {
         </section>
 
         <section className={`${styles.section} ${styles.prose}`}>
-          <h2 className={styles.sectionTitle}>Final exhibition and catalog</h2>
-          <p>
-            In October 2022 we organized the last exhibition with all the paintings at VDLART
-            Gallery in Eindhoven City during the Dutch Design Week.
-          </p>
-          <p>
-            We shall also publish a new catalog with all unpublished paintings and stories made by
-            international artists, as they were told on stage during our theatre performances. The
-            following translations can be downloaded:
-          </p>
-          <ul className={styles.languageList}>
-            <li><a href="/translations/final_serbian.pdf" target="_blank" rel="noreferrer">Serbian</a></li>
-            <li><a href="/translations/final_croatian.pdf" target="_blank" rel="noreferrer">Croatian</a></li>
-            <li><a href="/translations/final_arab.pdf" target="_blank" rel="noreferrer">Arab</a></li>
-            <li><a href="/translations/final_hindi.pdf" target="_blank" rel="noreferrer">Hindi</a></li>
-            <li>Dutch (not yet available)</li>
-            <li>German (not yet available)</li>
-            <li>French (not yet available)</li>
-          </ul>
-        </section>
-
-        <section className={`${styles.section} ${styles.sectionAlt} ${styles.prose}`}>
           <h2 className={styles.sectionTitle}>Thank you</h2>
           <p>
             Thank you all for these wonderful years. Thank you artists, thank you audience, thank
@@ -92,6 +70,28 @@ export default function Welcome() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className={`${styles.section} ${styles.sectionAlt} ${styles.prose}`}>
+          <h2 className={styles.sectionTitle}>Final exhibition and catalog</h2>
+          <p>
+            In October 2022 we organized the last exhibition with all the paintings at VDLART
+            Gallery in Eindhoven City during the Dutch Design Week.
+          </p>
+          <p>
+            We shall also publish a new catalog with all unpublished paintings and stories made by
+            international artists, as they were told on stage during our theatre performances. The
+            following translations can be downloaded:
+          </p>
+          <ul className={styles.languageList}>
+            <li><a href="/translations/final_serbian.pdf" target="_blank" rel="noreferrer">Serbian</a></li>
+            <li><a href="/translations/final_croatian.pdf" target="_blank" rel="noreferrer">Croatian</a></li>
+            <li><a href="/translations/final_arab.pdf" target="_blank" rel="noreferrer">Arab</a></li>
+            <li><a href="/translations/final_hindi.pdf" target="_blank" rel="noreferrer">Hindi</a></li>
+            <li>Dutch (not yet available)</li>
+            <li>German (not yet available)</li>
+            <li>French (not yet available)</li>
+          </ul>
         </section>
 
         <section className={styles.section}>

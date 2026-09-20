@@ -16,12 +16,25 @@
   margin: 0;
 }
 
+/* As on the welcome page: one flush column of alternating bands, not a run of
+   separate boxes. */
 .section {
   padding: 3rem 2rem;
-  margin-bottom: 2rem;
   border: 2px solid var(--color-border-box);
-  border-radius: var(--radius-md);
   background: var(--color-bg-secondary);
+}
+
+.section + .section {
+  border-top: none;
+}
+
+.section:first-of-type {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.section:last-of-type {
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  margin-bottom: 2rem;
 }
 
 .section h2 {
@@ -46,6 +59,8 @@
 .sectionAlt .show { color: var(--color-show-on-dark); }
 .sectionAlt .your { color: var(--color-your-on-dark); }
 .sectionAlt .hope { color: var(--color-hope-on-dark); }
+.sectionAlt .quote { border-left-color: var(--color-hope-on-dark); }
+.sectionAlt .quote cite { color: var(--color-text-on-dark-muted); }
 
 .quote {
   border-left: 4px solid var(--color-hope);
