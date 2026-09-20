@@ -11,26 +11,36 @@
 .your { color: var(--color-your); }
 .hope { color: var(--color-hope); }
 
-/* The sections stack flush into a single column rather than sitting apart as
-   separate boxes, so neighbours share one border line and only the two ends
-   of the stack are rounded. The shade alternates to break up the run. */
 .section {
   padding: 3rem 2rem;
+  margin-bottom: 2rem;
   border: 2px solid var(--color-border-box);
+  border-radius: var(--radius-md);
   background: var(--color-bg-secondary);
 }
 
-.section + .section {
+/* The opening three sections are one block - how the project ended - and the
+   archive proper starts below it. They stack flush inside it, sharing one
+   border line, and only the block's own ends are rounded. */
+.heroBox {
+  margin-bottom: 2rem;
+}
+
+.heroBox .section {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.heroBox .section + .section {
   border-top: none;
 }
 
-.section:first-of-type {
+.heroBox .section:first-child {
   border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
-.section:last-of-type {
+.heroBox .section:last-child {
   border-radius: 0 0 var(--radius-md) var(--radius-md);
-  margin-bottom: 2rem;
 }
 
 .sectionAlt {
