@@ -19,6 +19,20 @@
   --color-bg-tertiary: #F3EFD9;
   --color-surface: #FFFFFF;
 
+  /* The dark half of the alternating section boxes on the Welcome and Who Are
+     We pages. --color-show/-your/-hope are tuned for 4.5:1 on the light
+     surfaces above, so they read as near-invisible on this darker one; the
+     -on-dark set gives those same three accents (plus body text and links) a
+     version that clears contrast against it instead. */
+  --color-bg-dark: #585C4E;
+  --color-border-box: #1A1A1A;
+  --color-text-on-dark: #FFFFFF;
+  --color-text-on-dark-muted: #C9CDBE;
+  --color-link-on-dark: #B7E892;
+  --color-show-on-dark: #9BE564;
+  --color-your-on-dark: #5FD9A6;
+  --color-hope-on-dark: #FFA94D;
+
   --color-selected: #A2DFE8;
   --color-selected-border: #7BC8D4;
   --color-selected-secondary: #AAF185;

@@ -16,15 +16,24 @@
 .hope { color: var(--color-hope); }
 
 .section {
-  padding: 3rem 0;
-  border-bottom: 1px solid var(--color-border);
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+  border: 2px solid var(--color-border-box);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
 }
 
 .sectionAlt {
-  background: var(--color-bg-secondary);
-  margin: 0 -1.5rem;
-  padding: 3rem 1.5rem;
+  background: var(--color-bg-dark);
+  color: var(--color-text-on-dark);
 }
+
+.sectionAlt a { color: var(--color-link-on-dark); }
+.sectionAlt .show { color: var(--color-show-on-dark); }
+.sectionAlt .your { color: var(--color-your-on-dark); }
+.sectionAlt .hope { color: var(--color-hope-on-dark); }
+.sectionAlt .splitText p,
+.sectionAlt .videoTitle { color: var(--color-text-on-dark-muted); }
 
 .sectionTitle {
   font-size: var(--text-xl);
