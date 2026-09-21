@@ -70,8 +70,56 @@ interface ModalProps {
   onNext: () => void
 }
 
+/* The painting blown up over everything else. A dialog of its own, opened on
+   top of the one below it, so that Escape closes the picture first and the
+   story it came from second. */
+function ZoomedImage({
+  painting,
+  which,
+  onClose,
+}: {
+  painting: Painting
+  which: 'painting' | 'sidekick'
+  onClose: () => void
+}) {
+  const dialog = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    dialog.current?.showModal()
+  }, [])
+
+  return (
+    <dialog
+      ref={dialog}
+      className={styles.zoom}
+      aria-label={which === 'painting' ? painting.title : painting.artist.fullname}
+      /* React walks its own tree with this one, and this dialog sits inside the
+         modal's, so without stopping it Escape would shut the story as well as
+         the picture. */
+      onCancel={e => {
+        e.preventDefault()
+        e.stopPropagation()
+        onClose()
+      }}
+      /* Anywhere, the picture included: there is nothing else here to click. */
+      onClick={onClose}
+    >
+      {which === 'painting' ? (
+        <PaintingImage tag={painting.tag} alt={painting.title} className={styles.zoomImg} />
+      ) : (
+        <SidekickImage
+          tag={painting.tag}
+          alt={painting.artist.fullname}
+          className={styles.zoomImg}
+        />
+      )}
+    </dialog>
+  )
+}
+
 function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
   const dialog = useRef<HTMLDialogElement>(null)
+  const [zoomed, setZoomed] = useState<'painting' | 'sidekick' | null>(null)
 
   /* A dialog rather than a div, as the cookie dialog is, so that the backdrop,
      Escape and the focus trap are the browser's job rather than ours. The
@@ -113,16 +161,28 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
       </div>
       <div className={styles.modalBody}>
         <div className={styles.modalImages}>
-          <PaintingImage
-            tag={painting.tag}
-            alt={painting.title}
-            className={styles.modalImg}
-          />
-          <SidekickImage
-            tag={painting.tag}
-            alt={painting.artist.fullname}
-            className={styles.modalSidekick}
-          />
+          <button
+            className={styles.zoomBtn}
+            onClick={() => setZoomed('painting')}
+            aria-label={`Enlarge ${painting.title}`}
+          >
+            <PaintingImage
+              tag={painting.tag}
+              alt={painting.title}
+              className={styles.modalImg}
+            />
+          </button>
+          <button
+            className={styles.zoomBtn}
+            onClick={() => setZoomed('sidekick')}
+            aria-label={`Enlarge the photo of ${painting.artist.fullname}`}
+          >
+            <SidekickImage
+              tag={painting.tag}
+              alt={painting.artist.fullname}
+              className={styles.modalSidekick}
+            />
+          </button>
         </div>
         <div className={styles.modalInfo}>
           <h2 className={styles.modalTitle}>{painting.title}</h2>
@@ -160,6 +220,9 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
           })}
         </div>
       </div>
+      {zoomed && (
+        <ZoomedImage painting={painting} which={zoomed} onClose={() => setZoomed(null)} />
+      )}
     </dialog>
   )
 }

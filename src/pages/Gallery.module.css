@@ -330,6 +330,14 @@
   gap: 0.9rem;
 }
 
+.zoomBtn {
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+}
+
 /* Both pictures are mounted rather than bled to the edge: a white margin and a
    shadow, the way the paintings hang in the exhibition. */
 .modalImg,
@@ -415,7 +423,32 @@
   border: none;
 }
 
+/* The enlarged picture and nothing else: no frame, no surface, just the image
+   as large as the window allows on a near-black backdrop. */
+.zoom {
+  margin: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  border: none;
+  background: none;
+  cursor: zoom-out;
+}
+
+.zoom::backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+
+/* The box is the window and the picture is fitted inside it, rather than the
+   window merely being a ceiling: the paintings are stored at 700px and a cap
+   would leave most screens showing them little bigger than the modal did. */
+.zoomImg {
+  display: block;
+  width: 96vw;
+  height: 96vh;
+  object-fit: contain;
+}
+
 @media (max-width: 600px) {
   .modalBody { grid-template-columns: 1fr; padding: 1.25rem; }
-  .modalImg, .modalSidekick { width: 100%; }
+  .modalImg, .modalSidekick, .zoomBtn { width: 100%; }
 }
