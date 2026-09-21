@@ -252,80 +252,98 @@
   width: calc(100% - 2rem);
   max-height: 90vh;
   overflow-y: auto;
-  border: none;
+  border: 1px solid var(--color-border-warm);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: var(--color-bg-primary);
   color: var(--color-text);
-  position: relative;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
 }
 
 .modal::backdrop {
   background: rgba(0, 0, 0, 0.7);
 }
 
-.modalClose {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background: none;
-  border: none;
-  font-size: var(--text-2xl);
-  cursor: pointer;
-  color: var(--color-text-muted);
-  line-height: 1;
+/* The bar stays put while the story scrolls under it, so the way out and the
+   way on are in the same place however long the painting's story is. */
+.modalHeader {
+  position: sticky;
+  top: 0;
   z-index: 1;
-}
-
-.modalClose:hover {
-  color: var(--color-text);
-}
-
-.modalBody {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  padding: 1.5rem;
-}
-
-.modalImages {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.modalImg {
-  max-width: 300px;
-  border-radius: var(--radius-md);
-  object-fit: cover;
-}
-
-.modalSidekick {
-  max-width: 300px;
-  border-radius: var(--radius-md);
-  object-fit: cover;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--color-bg-tertiary);
+  border-bottom: 1px solid var(--color-border-warm);
 }
 
 .modalNav {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
 }
 
 .modalNavBtn {
-  background: none;
-  border: none;
-  padding: 0;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
   color: var(--color-your);
   cursor: pointer;
   font-size: var(--text-sm);
 }
 
 .modalNavBtn:hover {
-  text-decoration: underline;
+  border-color: var(--color-your);
+}
+
+.modalClose {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  background: var(--color-surface);
+  font-size: var(--text-xl);
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.modalClose:hover {
+  border-color: var(--color-hope);
+  color: var(--color-text);
+}
+
+.modalBody {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.75rem;
+  padding: 1.75rem;
+}
+
+.modalImages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* Both pictures are mounted rather than bled to the edge: a white margin and a
+   shadow, the way the paintings hang in the exhibition. */
+.modalImg,
+.modalSidekick {
+  width: 300px;
+  padding: 0.5rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
 }
 
 .modalTitle {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   margin-bottom: 0.25rem;
 }
 
@@ -338,29 +356,39 @@
 .modalMeta {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
 }
 
 .modalTags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.tag,
+.selectionTag,
+.statusTag {
+  border-radius: var(--radius-pill);
+  padding: 0.15rem 0.7rem;
+  font-size: var(--text-xs);
+  color: var(--color-text);
 }
 
 .tag {
-  background: var(--color-bg-tertiary);
-  border-radius: var(--radius-pill);
-  padding: 0.15rem 0.6rem;
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  background: var(--color-selected);
+  border: 1px solid var(--color-selected-border);
+  text-transform: capitalize;
 }
 
 .selectionTag {
   background: var(--color-selected-secondary);
-  border-radius: var(--radius-pill);
-  padding: 0.15rem 0.6rem;
-  font-size: var(--text-xs);
+  border: 1px solid var(--color-selected-secondary-border);
+}
+
+.statusTag {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
   color: var(--color-text-muted);
 }
 
@@ -388,6 +416,6 @@
 }
 
 @media (max-width: 600px) {
-  .modalBody { grid-template-columns: 1fr; }
-  .modalImg, .modalSidekick { max-width: 100%; }
+  .modalBody { grid-template-columns: 1fr; padding: 1.25rem; }
+  .modalImg, .modalSidekick { width: 100%; }
 }

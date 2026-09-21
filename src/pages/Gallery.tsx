@@ -101,7 +101,16 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
         if (e.target === dialog.current) onClose()
       }}
     >
-      <button className={styles.modalClose} onClick={onClose} aria-label="Close">×</button>
+      {/* Previous and Next sit together at one end and the close at the other,
+          so that stepping through the paintings never lands next to the button
+          that leaves them. */}
+      <div className={styles.modalHeader}>
+        <div className={styles.modalNav}>
+          <button className={styles.modalNavBtn} onClick={onPrev}>‹ Previous</button>
+          <button className={styles.modalNavBtn} onClick={onNext}>Next ›</button>
+        </div>
+        <button className={styles.modalClose} onClick={onClose} aria-label="Close">×</button>
+      </div>
       <div className={styles.modalBody}>
         <div className={styles.modalImages}>
           <PaintingImage
@@ -116,32 +125,25 @@ function PaintingModal({ painting, onClose, onPrev, onNext }: ModalProps) {
           />
         </div>
         <div className={styles.modalInfo}>
-          <div className={styles.modalNav}>
-            <button className={styles.modalNavBtn} onClick={onPrev}>&lt; Previous</button>
-            <button className={styles.modalNavBtn} onClick={onNext}>Next &gt;</button>
-          </div>
           <h2 className={styles.modalTitle}>{painting.title}</h2>
           <p className={styles.modalArtist}>{painting.artist.fullname}</p>
           <p className={styles.modalMeta}>
             {painting.artist.country.name} · {painting.date} · #{painting.tag}
           </p>
-          <p className={styles.modalMeta}>
-            {SELL_STATUS_LABELS[painting.sell_status] ?? 'Not for sale'}
-          </p>
-          {painting.characteristics.length > 0 && (
-            <div className={styles.modalTags}>
-              {painting.characteristics.map(c => (
-                <span key={c} className={styles.tag}>{c}</span>
-              ))}
-            </div>
-          )}
-          {painting.selections.length > 0 && (
-            <div className={styles.modalTags}>
-              {painting.selections.map(s => (
-                <span key={s} className={styles.selectionTag}>{s}</span>
-              ))}
-            </div>
-          )}
+          {/* Characteristics, selections and the sell status are all labels on
+              the painting, so they run as one row of chips rather than a list
+              per kind, coloured as the filters that match them are. */}
+          <div className={styles.modalTags}>
+            {painting.characteristics.map(c => (
+              <span key={c} className={styles.tag}>{c}</span>
+            ))}
+            {painting.selections.map(s => (
+              <span key={s} className={styles.selectionTag}>{s}</span>
+            ))}
+            <span className={styles.statusTag}>
+              {SELL_STATUS_LABELS[painting.sell_status] ?? 'Not for sale'}
+            </span>
+          </div>
           <p className={styles.modalStory}>{painting.story}</p>
           {painting.videos.map((v, i) => {
             const videoId = getYouTubeId(v.link)
