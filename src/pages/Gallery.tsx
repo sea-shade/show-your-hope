@@ -9,6 +9,7 @@ import Carousel from '../components/Carousel'
 import PaintingTable from '../components/PaintingTable'
 import DataStatus from '../components/DataStatus'
 import { loadPaintings, useData } from '../lib/paintingData'
+import { assetUrl } from '../lib/assets'
 import styles from './Gallery.module.css'
 
 const characteristics = characteristicsData as Characteristic[]
@@ -344,7 +345,7 @@ function GalleryView({ paintings }: { paintings: Painting[] }) {
                 onClick={() => setOpenGroup(g => (g === 'characteristics' ? null : 'characteristics'))}
                 aria-expanded={openGroup === 'characteristics'}
               >
-                <img src="/icons/characteristics.png" alt="" className={styles.filterIcon} />
+                <img src={assetUrl('icons/characteristics.png')} alt="" className={styles.filterIcon} />
                 Characteristics
               </button>
               {openGroup === 'characteristics' && (
@@ -369,7 +370,7 @@ function GalleryView({ paintings }: { paintings: Painting[] }) {
                 onClick={() => setOpenGroup(g => (g === 'selections' ? null : 'selections'))}
                 aria-expanded={openGroup === 'selections'}
               >
-                <img src="/icons/selections.png" alt="" className={styles.filterIcon} />
+                <img src={assetUrl('icons/selections.png')} alt="" className={styles.filterIcon} />
                 Selections
               </button>
               {openGroup === 'selections' && (

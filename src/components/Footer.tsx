@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { assetUrl } from '../lib/assets'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -24,7 +25,7 @@ export default function Footer() {
             <div className={styles.title}>Bits &amp; pieces</div>
             <p><Link to="/tunisia">The Tunisia tour</Link></p>
             <button className={styles.cookiesLink} onClick={() => cookies.current?.showModal()}>
-              <img src="/icons/cookies.png" alt="" className={styles.cookiesIcon} />
+              <img src={assetUrl('icons/cookies.png')} alt="" className={styles.cookiesIcon} />
               Cookies
             </button>
             <p>© 2013-now - Show Your Hope</p>

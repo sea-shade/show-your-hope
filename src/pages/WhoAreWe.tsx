@@ -1,3 +1,4 @@
+import { assetUrl } from '../lib/assets'
 import styles from './WhoAreWe.module.css'
 
 export default function WhoAreWe() {
@@ -58,7 +59,7 @@ export default function WhoAreWe() {
             </div>
             <div className={styles.splitMedia}>
               <img
-                src="/truck-with-martin.jpg"
+                src={assetUrl('truck-with-martin.jpg')}
                 alt="The DAF truck"
                 className={styles.sectionImg}
               />
@@ -95,7 +96,7 @@ export default function WhoAreWe() {
             </div>
             <div className={styles.splitMedia}>
               <img
-                src="/spoelhuis.jpg"
+                src={assetUrl('spoelhuis.jpg')}
                 alt="The Spoelhuis"
                 className={styles.sectionImg}
               />

@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import PaintingImage from '../components/PaintingImage'
 import { loadPaintings, useData } from '../lib/paintingData'
+import { assetUrl } from '../lib/assets'
 import styles from './Welcome.module.css'
 
 function randomSample<T>(arr: T[], n: number): T[] {
@@ -24,7 +25,7 @@ export default function Welcome() {
 
   return (
     <div className="page">
-      <img src="/hero.jpg" alt="Show Your Hope" className={styles.heroImg} />
+      <img src={assetUrl('hero.jpg')} alt="Show Your Hope" className={styles.heroImg} />
 
       <div className="container">
         <div className={styles.heroBox}>
@@ -85,10 +86,10 @@ export default function Welcome() {
               following translations can be downloaded:
             </p>
             <ul className={styles.languageList}>
-              <li><a href="/translations/final_serbian.pdf" target="_blank" rel="noreferrer">Serbian</a></li>
-              <li><a href="/translations/final_croatian.pdf" target="_blank" rel="noreferrer">Croatian</a></li>
-              <li><a href="/translations/final_arab.pdf" target="_blank" rel="noreferrer">Arab</a></li>
-              <li><a href="/translations/final_hindi.pdf" target="_blank" rel="noreferrer">Hindi</a></li>
+              <li><a href={assetUrl('translations/final_serbian.pdf')} target="_blank" rel="noreferrer">Serbian</a></li>
+              <li><a href={assetUrl('translations/final_croatian.pdf')} target="_blank" rel="noreferrer">Croatian</a></li>
+              <li><a href={assetUrl('translations/final_arab.pdf')} target="_blank" rel="noreferrer">Arab</a></li>
+              <li><a href={assetUrl('translations/final_hindi.pdf')} target="_blank" rel="noreferrer">Hindi</a></li>
               <li>Dutch (not yet available)</li>
               <li>German (not yet available)</li>
               <li>French (not yet available)</li>
@@ -169,7 +170,7 @@ export default function Welcome() {
               <Link to="/worldmap" className={styles.mapLink}>Explore the World Map →</Link>
             </div>
             <div>
-              <img src="/syh_map_overview.png" alt="World map overview" className={styles.splitImg} />
+              <img src={assetUrl('syh_map_overview.png')} alt="World map overview" className={styles.splitImg} />
             </div>
           </div>
         </section>

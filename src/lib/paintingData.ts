@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Painting, Exhibition } from '../types'
+import { assetUrl } from './assets'
 
 /* The paintings are 840KB of JSON, most of it the stories. Imported, they were
    part of the initial bundle, so every visitor paid for all of them before
@@ -7,7 +8,7 @@ import type { Painting, Exhibition } from '../types'
    the welcome page's three thumbnails. Fetched, they are a file the browser
    caches on its own and only the pages that read them wait for. */
 function dataUrl(name: string): string {
-  return `${import.meta.env.BASE_URL}data/${name}.json`
+  return assetUrl(`data/${name}.json`)
 }
 
 /* One request per file per session, however many components ask. */

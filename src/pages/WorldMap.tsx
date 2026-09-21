@@ -7,6 +7,7 @@ import PaintingImage from '../components/PaintingImage'
 import SidekickImage from '../components/SidekickImage'
 import DataStatus from '../components/DataStatus'
 import { loadPaintings, loadExhibitions, useData } from '../lib/paintingData'
+import { assetUrl } from '../lib/assets'
 import styles from './WorldMap.module.css'
 
 type MarkerType = 'artist' | 'painting' | 'exhibition'
@@ -18,9 +19,9 @@ const LAYERS: { type: MarkerType; label: string; color: string }[] = [
 ]
 
 const ICON_URL: Record<MarkerType, string> = {
-  artist: '/icons/artist.png',
-  painting: '/icons/painting.png',
-  exhibition: '/icons/exhibition.png',
+  artist: assetUrl('icons/artist.png'),
+  painting: assetUrl('icons/painting.png'),
+  exhibition: assetUrl('icons/exhibition.png'),
 }
 
 /** The icons are black silhouettes, so they sit on a coloured disc and are

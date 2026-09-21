@@ -1,3 +1,4 @@
+import { assetUrl } from '../lib/assets'
 import styles from './Tunisia.module.css'
 
 const stops = [
@@ -91,7 +92,7 @@ export default function Tunisia() {
   return (
     <div className="page">
       <div className={styles.hero}>
-        <img src="/tunisia.jpg" alt="Tunisia tour" className={styles.heroImg} />
+        <img src={assetUrl('tunisia.jpg')} alt="Tunisia tour" className={styles.heroImg} />
       </div>
 
       <div className="container">
