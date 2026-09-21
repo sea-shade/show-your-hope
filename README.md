@@ -68,3 +68,9 @@ to Vite as `BASE_PATH` and Vite rebases the paths in `index.html` and in CSS
 `url()`. The ones written in components go through `assetUrl` in
 `src/lib/assets.ts` instead, which reads the same prefix at runtime. On a custom
 domain the prefix is empty and every path is served from the root.
+
+## Licence
+
+The source code is MIT. The paintings, photographs, translations, data and site
+text are the property of Show Your Hope and all rights in them are reserved.
+See [LICENSE](LICENSE).

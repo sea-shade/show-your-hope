@@ -1,0 +1,92 @@
+Show Your Hope
+Copyright (c) 2013-2026 Show Your Hope. All rights reserved.
+
+This repository holds two kinds of material under two different sets of terms:
+the source code of the website, which is open, and the content the website
+presents, which is not. Where the two meet, for example source code that
+embeds site text or imagery, the terms for the content govern.
+
+
+===============================================================================
+1. SOURCE CODE - MIT License
+===============================================================================
+
+Applies to the source code of the application: the files under src/ and
+scripts/, index.html, and the build, lint, TypeScript and workflow
+configuration. It does not apply to any image, photograph, font, PDF, data
+file or prose those files load, reference or contain.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+===============================================================================
+2. CONTENT - All rights reserved
+===============================================================================
+
+Applies to everything in this repository that is not source code, and to
+everything the build fetches from the syh-data repository, including but not
+limited to:
+
+  - the paintings and the photographs of them, wherever they appear, including
+    public/painting_images/
+  - the photographs of the artists with their paintings
+  - the other photographs and images in public/, among them hero.jpg,
+    tunisia.jpg, spoelhuis.jpg, truck-with-martin.jpg and
+    syh_map_overview.png
+  - the interface icons in public/icons/
+  - the translated catalogues in public/translations/
+  - the painting, artist, exhibition and story data in public/data/ and
+    src/data/
+  - the written text of the site, wherever it is stored, including the prose
+    inside the source files
+  - the Show Your Hope name, wordmark and logo
+
+Copyright in this material is held by Show Your Hope, which reserves all
+rights in it. No licence to it is granted by this file, by the MIT licence in
+part 1, by the repository being public, or by any other means.
+
+Without prior written permission from Show Your Hope, you may not:
+
+  - copy, reproduce, republish, redistribute, mirror or publicly display it
+  - sell, licence, sub-licence, rent or otherwise exploit it commercially
+  - modify, adapt, crop, retouch, recolour, translate or otherwise make
+    derivative works from it
+  - use it to train, fine-tune, evaluate or benchmark machine learning models
+  - remove or alter any copyright notice, credit line, watermark or embedded
+    IPTC, XMP or EXIF metadata
+
+Viewing the published website in a web browser is permitted, as is the
+temporary copying a browser performs in order to display it.
+
+Requests for permission: info@showyourhope.net
+
+
+===============================================================================
+3. THIRD-PARTY MATERIAL
+===============================================================================
+
+Some material here belongs to others and is covered by neither part above.
+Show Your Hope passes on no rights to it and it must not be reused from this
+repository:
+
+  - the typefaces in public/fonts/, which are licensed to Show Your Hope by
+    their owner and are not Show Your Hope's to sub-license
+  - the npm dependencies listed in package.json, each under its own licence
+  - the OpenStreetMap map tiles the world map loads, (c) OpenStreetMap
+    contributors, under the Open Database License
